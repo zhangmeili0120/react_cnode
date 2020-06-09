@@ -94,8 +94,11 @@ export default App;
 - 全局路由先匹配出首页面 (attention, 这里不可用exact): <Route path="/index" component = {HomePage} />
 - 首页面HomePage 再 展示出路由渲染首页面下不同类型的页面 <Route path="/index/:type" component={HomeList} />
 
-
 ## 版本 branchs
 - simpleVersion 未使用redux
 - reduxVersion1 使用redux + class
+  - 引入react, react-redux, 创建reducer,action和store
+  - 首页/主题详情/用户详情，分别建立reducer
+  - 请求接口的方法和dispatch触发action都存放在actions.js
+  - 需要仓库的页面，用connect传递state和dispatch; 页面数据从state中取出改为从props取
 - reduxVersion2 使用redux + hooks
