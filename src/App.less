@@ -54,13 +54,42 @@ li {
 .my_footer {
   background: #eeeeee;
   text-align: center;
-  line-height: 50px;
+  
+}
+
+@media screen and (min-width: 576px) {
+  .user_reply {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    .reply_rt {
+      text-align: right;
+    }
+  }
+  
+}
+@media screen and (max-width: 576px) {
+  .user_reply {
+    display: block;
+    .reply_rt {
+      text-align: right;
+    }
+  }  
 }
 
 .home_page_list.ant-list {
   padding: 0 30px 20px;
 }
-
+.home_page_list {
+  @media screen and (max-width: 576px) {
+    .ant-list-item {
+      display: block;
+      .ant-list-item-action {
+        margin-left: 48px;
+      }
+    }
+  }
+}
 .reply_item {
   border-bottom: 1px solid #cccccc;
 }

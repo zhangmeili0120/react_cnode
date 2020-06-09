@@ -1,38 +1,21 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Card, Avatar, Col, Row } from "antd";
 import UserListCom from "./UserListCom";
+import { connect } from "react-redux";
+import {getUserDetailData} from '../../store/actions'
 
-export default class UserPage extends Component {
+class UserPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: {
-        recent_topics: [],
-        recent_replies: []
-      }
-    };
     const { id } = this.props.match.params;
     this.getData(id);
   }
   getData = id => {
-    axios
-      .get(` https://cnodejs.org/api/v1/user/${id}`)
-      .then(res => {
-        this.setState({
-          loading: false,
-          data: res.data.data
-        });
-      })
-      .catch(err => {
-        this.setState({
-          loading: false,
-          data: this.state.data
-        });
-      });
+    const {dispatch} = this.props;
+    getUserDetailData(dispatch, id)
   };
   render() {
-    const { data, loading } = this.state;
+    const { data, loading } = this.props;
     const title = (
       <div>
         <Avatar src={data.avatar_url} />
@@ -75,3 +58,5 @@ export default class UserPage extends Component {
     );
   }
 }
+
+export default connect(state => state.user)(UserPage);
