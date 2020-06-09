@@ -101,4 +101,9 @@ export default App;
   - 首页/主题详情/用户详情，分别建立reducer
   - 请求接口的方法和dispatch触发action都存放在actions.js
   - 需要仓库的页面，用connect传递state和dispatch; 页面数据从state中取出改为从props取
-- reduxVersion2 使用redux + hooks
+- reduxVersion2 使用redux + hooks: 改造class组件为funciton组件。示例HomeList.js
+  1. store 数据传递 useSelector : `const { data, loading } = useSelector(state => state.home);`
+  2. 接口actions改造成自定义hook, 返回一个函数: [actions.js](src/store/actions.js)
+  3. 在页面的 useEffect 里边定义接口 `useEffect(() => { getHomeData(type, page) }, [page, type]);`
+  4. 组件内状态用 useState 定义 `const [page, setPage] = useState(1);`
+  5. 来自路由的参数 useParams 获取 `const { type } = useParams();`
