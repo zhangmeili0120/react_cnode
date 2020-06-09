@@ -1,68 +1,101 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# react-cnode实战项目（2020-6-5）
+## 资源参考
+- https://github.com/motao314/React_cNode
+## 技术栈
+- react
+- react-router-dom
+- redux
+- react-redux
+- redux-thunk
+- axios
+- antd
 
-## Available Scripts
+## create-react-app 项目 引入antd
+antd官网最新提供的：在 create-react-app 中使用，引入less后会报错。找到一个插件 **[craco-antd](https://www.npmjs.com/package/craco-antd)**
 
-In the project directory, you can run:
+craco-antd包括：支持less 通过craco-less;  babel-plugin-import 按需引入antd;  很方便的方式去配置主题
+### 安装依赖
+```
+yarn add @craco/craco craco-less craco-antd antd
+```
+### 自定义主题颜色
+> [这有一份所有主题配置列表文件](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
 
-### `yarn start`
+自定义主题有2种方式:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+一. 根目录下的文件 antd.customize.less 中配置
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+在你的文件根目录下新建文件 antd.customize.less
+```javascript
+@primary-color: #1da57a;
+@link-color: #1da57a;
+```
 
-### `yarn test`
+二. 根目录下的 craco.config.js 配置 customizeTheme 对象
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+在你的文件根目录下新建文件 craco.config.js
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+const CracoAntDesignPlugin = require("craco-antd");
+ 
+module.exports = {
+  plugins: [
+    {
+      plugin: CracoAntDesignPlugin,
+      options: {
+        customizeTheme: {
+          "@primary-color": "#1DA57A",
+          "@link-color": "#1DA57A"
+        }
+      }
+    }
+  ]
+};
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### 修改css文件
+修改 src/App.css，在文件顶部引入 antd/dist/antd.css。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`@import '~antd/dist/antd.less';`
 
-### `yarn eject`
+### 引入 button 组件
+```javascript
+import React from 'react';
+import { Button } from 'antd';
+import './App.less';
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const App = () => (
+  <div className="App">
+    <Button type="primary">Button</Button>
+  </div>
+);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+export default App;
+```
+可以看到页面上的button是从默认的蓝色的变成了绿色的，然后可以愉快的开始业务编码了。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 数据来源
+[仿写页面-cnode官网](https://cnodejs.org)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[cnode数据-官方开放api](https://cnodejs.org/api)
 
-## Learn More
+## 业务编码之...
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 页面
+- 首页（主题列表）
+- 主题详情
+- 用户详情
+- 关于 (静态数据)
+- 教程 (静态数据)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 路由
+- 项目需要划分2块路由，全局路由(首页/关于/教程/用户页/主题详情) 和 首页路由(全部/精华/问答/分享/招聘/测试)
+- 全局路由先匹配出首页面 (attention, 这里不可用exact): <Route path="/index" component = {HomePage} />
+- 首页面HomePage 再 展示出路由渲染首页面下不同类型的页面 <Route path="/index/:type" component={HomeList} />
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## 版本 branchs
+- simpleVersion 未使用redux
+- reduxVersion1 使用redux + class
+- reduxVersion2 使用redux + hooks

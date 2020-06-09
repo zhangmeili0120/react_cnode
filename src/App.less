@@ -1,0 +1,70 @@
+@import '~antd/dist/antd.less';
+* {
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+.app_page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  main {
+    flex: 1;
+    background: #e1e1e1;
+    & > div {
+      background: #ffffff;
+      margin: 15px 30px;
+    }
+  }
+}
+
+.my_header {
+  background: #444;
+  padding: 10px 10px 0;
+  min-height: 50px;
+  .logo {
+    width: 120px;
+  }
+
+  .header_menu {
+   background: #444;
+   max-width: 340px;
+   float: right;
+   li.ant-menu-item {
+    border-bottom: 2px solid #444444;
+    &:hover {
+      border-bottom: 2px solid #1890ff;
+    }
+   }
+   li.ant-menu-item-selected {
+    border-bottom: 2px solid #1890ff;
+   }
+   li a {
+     color: #ffffff;
+     &.active {
+      color: #1890ff;
+     }
+   }
+  }
+}
+
+.my_footer {
+  background: #eeeeee;
+  text-align: center;
+  line-height: 50px;
+}
+
+.home_page_list.ant-list {
+  padding: 0 30px 20px;
+}
+
+.reply_item {
+  border-bottom: 1px solid #cccccc;
+}
+
+img {
+  max-width: 100%;
+}
